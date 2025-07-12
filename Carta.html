@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+</head>
+  <title>✨🙃✨</title>
+  <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+body.modoNormal {
+  background-image: url('https://pixel200712.github.io/Im-genes-/IMG_20250519_054237_611.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+}  
+
+/* Canvas estelar */
+#starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.page {
+  width: 90vw;
+  max-width: 300px;
+  height: auto;
+  min-height: 40vh;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 15%;
+  left: 12%;
+  padding: 2rem;
+  transition: all 1s ease-in-out;
+  border-radius: 20px;
+
+  /* Solo el fondo de la tarjeta borroso */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(1px);
+
+  opacity: 0;
+  pointer-events: none;
+  border: 2px solid rgba(200, 200, 200, 0.2); /* más definido pero no duro */
+  
+}
+
+.page.active {
+  left: 12%;
+  opacity: 1;
+  pointer-events: auto;
+}
+/* ✨ Página que está entrando */
+.page.fade-in {
+  animation: aparecer 0.6s ease forwards;
+}
+
+/* ✨ Página que está saliendo */
+.page.fade-out {
+  animation: desaparecer 0.4s ease forwards;
+}
+
+/* Animaciones */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes desaparecer {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Títulos */
+h1 {
+  color: white;
+  text-shadow: 0 0 10px #eee, 0 0 20px #fff;
+  animation: pulso 2s infinite;
+}
+
+/* Párrafos */
+p {
+  font-size: 1rem;
+  color: #ddd;
+  max-width: 600px;
+  margin-top: 1rem;
+  line-height: 1.2;
+}
+
+/* Botón */
+button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #fff;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #333;
+  transform: scale(1.05);
+}
+
+.star {
+  position: absolute;
+  background: white;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  animation: floatUp 10s infinite ease-in;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100vh); }
+}
+
+.lunaBoton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  padding: 15px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.lunaBoton:hover {
+  background: #ff0000;
+  box-shadow: 0 0 30px #ff0000aa;
+}
+
+body.modoRojo {
+  background-image: url('https://pixel200712.github.io/Im-genes-/486cc0c7-282d-4b79-a809-8865e6bb0318.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffcccc;
+}
+
+body.modoRojo .page {
+  background: rgba(60, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+  border: 2px solid rgba(255, 0, 0, 0.4);
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+}
+
+body.modoRojo h1 {
+  color: #ffe6e6;
+  text-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff4d4d;
+}
+
+body.modoRojo p {
+  color: #f5dada;
+}
+
+body.modoRojo button {
+  background: #ff1a1a;
+  box-shadow: 0 0 20px #ff4d4d88;
+}
+
+body.modoRojo button:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
+body.modoRojo .lunaBoton {
+  background: #330000;
+  box-shadow: 0 0 25px #ff1a1a88;
+}
+
+body.modoRojo .lunaBoton:hover {
+  background: #660000;
+  box-shadow: 0 0 35px #ff3333aa;
+}
+
+body.modoRojo .star {
+  background: #ff5c5c;
+  box-shadow: 0 0 6px #ff0000;
+}
+
+body.modoAzul {
+ background-image: url('https://pixel200712.github.io/Im-genes-/65b4fa05-880c-4e8d-8640-009092fdaa1a.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffcccc;
+}
+
+body.modoAzul .page {
+  background: rgba(0, 20, 40, 0.5);
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(0, 128, 255, 0.2);
+  box-shadow: 0 0 25px rgba(0, 128, 255, 0.15);
+}
+
+body.modoAzul h1 {
+  color: #ccf2ff;
+  text-shadow: 0 0 10px #33ccff, 0 0 20px #00aaff;
+}
+
+body.modoAzul p {
+  color: #cceeff;
+}
+
+body.modoAzul button {
+  background: #008cff;
+  box-shadow: 0 0 20px #008cff99;
+}
+
+body.modoAzul button:hover {
+  background: #006bb3;
+  transform: scale(1.05);
+}
+
+body.modoAzul .lunaBoton {
+  background: #001f3f;
+  box-shadow: 0 0 25px #0099ff88;
+  color: #cceeff;
+}
+
+body.modoAzul .lunaBoton:hover {
+  background: #003366;
+  box-shadow: 0 0 35px #00ccffaa;
+}
+
+/* 🌟 Estrellas azuladas */
+body.modoAzul .star {
+  background: #88ccff;
+  box-shadow: 0 0 8px #00c8ff;
+}
+
+body.modoBlanco{
+ background-image: url('https://pixel200712.github.io/Im-genes-/19a16c90-7c1b-4251-87c7-2164b43a11a3.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffcccc;
+}
+
+body.modoBlanco .page {
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(200, 200, 200, 0.6);
+  box-shadow: 0 0 25px rgba(150, 150, 150, 0.15);
+}
+
+body.modoBlanco h1 {
+  color: #fff;
+  text-shadow: 0 0 8px #bbbbbb, 0 0 15px #dddddd;
+}
+
+body.modoBlanco p {
+  color: #fff;
+}
+
+body.modoBlanco button {
+  background: #eeeeee;
+  color: #444444;
+  box-shadow: 0 0 15px #bbbbbbaa;
+  border: 1.5px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+body.modoBlanco button:hover {
+  background: #dddddd;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #999999cc;
+}
+
+body.modoBlanco .lunaBoton {
+  background: #f7f7f7;
+  color: #666666;
+  box-shadow: 0 0 20px #cccccc88;
+}
+
+body.modoBlanco .lunaBoton:hover {
+  background: #e1e1e1;
+  box-shadow: 0 0 30px #bbbbbbcc;
+}
+
+/* 🌟 Estrellas blancas/doradas para modo blanco */
+body.modoBlanco .star {
+  background: #fff8dc; /* un blanco con un toque cálido */
+  box-shadow: 0 0 10px #ffeeba, 0 0 20px #fff5d1;
+}
+
+body.modoNaranja{
+ background-image: url('https://pixel200712.github.io/Im-genes-/IMG_20250519_054208_436.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffcccc;
+}
+
+body.modoNaranja .page {
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(255, 165, 0, 0.6); /* borde naranja */
+  box-shadow: 0 0 25px rgba(255, 140, 0, 0.2);
+}
+
+body.modoNaranja h1 {
+  color: #ff6600;
+  text-shadow: 0 0 10px #ff7f00, 0 0 20px #ff9500;
+}
+
+body.modoNaranja p {
+  color: #ffd9b3;
+  font-size: 1rem;
+  max-width: 600px;
+  margin-top: 1rem;
+  line-height: 1.2;
+}
+
+body.modoNaranja button {
+  background: #ff9f43;
+  color: #5a2a00;
+  box-shadow: 0 0 15px #ff8c00aa;
+  border: 1.5px solid #ff7f00;
+  transition: all 0.3s ease;
+}
+
+body.modoNaranja button:hover {
+  background: #ff7f00;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #ff6600cc;
+}
+
+body.modoNaranja .lunaBoton {
+  background: #ffc87c;
+  color: #663300;
+  box-shadow: 0 0 20px #ffa50088;
+}
+
+body.modoNaranja .lunaBoton:hover {
+  background: #ffb347;
+  box-shadow: 0 0 30px #ff9f00cc;
+}
+
+/* 🌟 Estrellas cálidas/naranjas */
+body.modoNaranja .star {
+  background: #ffb347;
+  box-shadow: 0 0 10px #ffa500, 0 0 20px #ff8c00cc;
+}
+
+.gif-interior {
+  display: none;
+  width: 120px;
+  border-radius: 1.5rem;
+  opacity: 0;
+  transform: scale(0.9) rotate(-2deg);
+  transition: all 0.8s ease;
+  animation: fadeInGif 1.5s ease-out forwards;
+  pointer-events: none; /* Evita que interfiera con botones */
+}
+
+.page.active .gif-interior {
+  display: block;
+}
+
+@keyframes fadeInGif {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+.page.active .gif-interior {
+  animation: gifAparece 1s ease-in forwards;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+@keyframes gifAparece {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.huella {
+  position: fixed;
+  font-size: 24px;
+  pointer-events: none;
+  animation: caerHuellita 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes caerHuellita {
+  0% {
+    transform: scale(0.5) translateY(-10px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0;
+  }
+}
+
+#secreto {
+  opacity: 1;
+  transform: scale(0.8);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+  </style>
+
+</head>
+<body>
+
+<!-- Páginas -->
+<canvas id="starfield"></canvas>
+
+<div class="page active" id="page1">
+  <img class="gif-interior" src="https://i.pinimg.com/originals/ca/36/b4/ca36b455a700fd216eb6cc1863ed9ff1.gif" alt="Sorpresa GIF" />
+  <h1 data-text="Hey tú 🤪"></h1>
+  <p data-text="No es tarea ni examen, solo unas palabras que quería decirte... así que xd jaja."></p>
+  <button onclick="nextPage()">Ver más</button>
+</div>
+
+<div class="page" id="page2">
+  <img class="gif-interior" src="https://i.pinimg.com/originals/a0/ba/95/a0ba951828efe9613d64db6e5b4f33e7.gif" alt="Sorpresa GIF" />
+  <h1 data-text="Eres única 😎"></h1>
+  <p data-text="Tu forma de ser es otra onda. Siempre sacas una sonrisa, incluso cuando el día anda medio torcido. Eso se valora un chingo."></p>
+  <button onclick="nextPage()">Siguiente</button>
+</div>
+
+<div class="page" id="page3">
+  <img class="gif-interior" src="https://i.pinimg.com/originals/4a/53/1f/4a531fd488adb6609b5f0ecf2ffdc3cc.gif" alt="Sorpresa GIF" />
+  <h1 data-text="Siempre al tiro 💥"></h1>
+  <p data-text="Gracias por estar, por aguantar mis loqueras y por no desaparecer cuando más se necesita una buena amistad."></p>
+  <button onclick="nextPage()">Última</button>
+</div>
+
+<div class="page" id="page4">
+  <img class="gif-interior" src="https://pixel200712.github.io/Im-genes-/ezgif-10bddbea31198d.gif" alt="Sorpresa GIF" />
+  <h1 data-text="Te aprecio un buen 💛"></h1>
+  <p data-text="No todo el mundo se toma el tiempo de hacer cosas como esta... pero tú lo vales. Gracias por ser tú, así como eres no cambies."></p>
+  <button onclick="mostrarSorpresa()">¿Un secreto?</button>
+<p id="secreto" style="display:none;">👀 A veces lo más simple es lo que más llega. Tú vales un montón. 💫</p>
+
+  <button onclick="restart()">Volver a leer</button>
+</div>
+
+<button class="lunaBoton" onclick="toggleTema()">💞</button>
+
+<script>
+
+  // Navegación
+let currentPage = 1;
+
+// Función para escribir letra por letra
+function escribirLinea(element, texto, velocidad = 50, delay = 0) {
+  // ⚠️ No limpiamos aquí
+  setTimeout(() => {
+    let i = 0;
+    const intervalo = setInterval(() => {
+      element.textContent += texto.charAt(i);
+      i++;
+      if (i >= texto.length) clearInterval(intervalo);
+    }, velocidad);
+  }, delay);
+}
+
+function iniciarEscrituraEnPagina(pageId) {
+  const page = document.getElementById(pageId);
+  const elementos = page.querySelectorAll('[data-text]');
+  let delayAcumulado = 1000;
+
+  // ✅ Limpiar todos los textos ANTES de empezar a escribir
+  elementos.forEach(el => {
+    el.textContent = '';
+  });
+
+  elementos.forEach(el => {
+    const texto = el.getAttribute('data-text');
+    escribirLinea(el, texto, 40, delayAcumulado);
+    delayAcumulado += texto.length * 40 + 500;
+  });
+
+  // Si usas el truco de mostrar botones luego:
+  mostrarBoton(pageId, delayAcumulado);
+}
+
+// Navegación entre páginas
+function nextPage() {
+  const actual = document.getElementById(`page${currentPage}`);
+
+  // 🧽 Limpiar todos los textos de la página actual ANTES de ocultarla
+  const textos = actual.querySelectorAll('[data-text]');
+  textos.forEach(el => el.textContent = '');
+
+  actual.classList.remove('active');
+  actual.classList.add('fade-out');
+
+  currentPage++;
+  const siguiente = document.getElementById(`page${currentPage}`);
+  siguiente.classList.add('fade-in');
+
+  setTimeout(() => {
+    actual.classList.remove('fade-out');
+    siguiente.classList.add('active');
+    siguiente.classList.remove('fade-in');
+    iniciarEscrituraEnPagina(`page${currentPage}`);
+  }, 400);
+}
+
+function restart() {
+  const actual = document.getElementById(`page${currentPage}`);
+  actual.classList.remove('active');
+  actual.classList.add('fade-out');
+
+  currentPage = 1;
+  const primera = document.getElementById(`page${currentPage}`);
+  primera.classList.add('fade-in');
+
+  setTimeout(() => {
+    actual.classList.remove('fade-out');
+    primera.classList.add('active');
+    primera.classList.remove('fade-in');
+    iniciarEscrituraEnPagina(`page${currentPage}`);
+  }, 400);
+}
+  
+  for (let i = 0; i < 60; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + 'vw';
+  star.style.top = Math.random() * 100 + 'vh';
+  star.style.animationDuration = (8 + Math.random() * 5) + 's';
+  star.style.opacity = Math.random();
+  document.body.appendChild(star);
+}
+
+  // Lista de clases de modo disponibles
+  const modos = ["modoNormal", "modoRojo", "modoAzul", "modoBlanco", "modoNaranja"];
+  let modoActual = 0;
+
+  // Aplica el primer modo al cargar la página
+  document.body.classList.add(modos[modoActual]);
+
+  // Función que rota entre los modos
+  function toggleTema() {
+    // Quitar el modo actual
+    document.body.classList.remove(modos[modoActual]);
+
+    // Avanzar al siguiente modo (circular)
+    modoActual = (modoActual + 1) % modos.length;
+
+    // Agregar el nuevo modo
+    document.body.classList.add(modos[modoActual]);
+
+    // Cambiar emoji del botón según el modo
+    const lunaBtn = document.querySelector('.lunaBoton');
+    switch (modos[modoActual]) {
+      case "modoNormal": lunaBtn.textContent = "💞"; break;
+      case "modoRojo": lunaBtn.textContent = "🌕"; break;
+      case "modoAzul": lunaBtn.textContent = "💎"; break;
+      case "modoBlanco": lunaBtn.textContent = "❄️"; break;
+      case "modoNaranja": lunaBtn.textContent = "🔥";
+break;
+    }
+  }
+
+window.addEventListener('DOMContentLoaded', () => {
+  iniciarEscrituraEnPagina('page1');
+});
+
+function mostrarSorpresa() {
+  document.getElementById("secreto").style.display = "block";
+}
+
+document.addEventListener("click", (e) => {
+  crearHuellasMultiples(e.clientX, e.clientY);
+});
+
+function crearHuellasMultiples(x, y) {
+  const cantidad = 3 + Math.floor(Math.random() * 3); // entre 3 y 5 huellitas
+  for (let i = 0; i < cantidad; i++) {
+    setTimeout(() => {
+      const offsetX = (Math.random() - 0.5) * 40; // movimiento horizontal aleatorio
+      const offsetY = i * 25; // desplazamiento hacia abajo (como caminando)
+
+      crearHuella(x + offsetX, y + offsetY);
+    }, i * 100); // se espacian en el tiempo
+  }
+}
+
+function crearHuella(x, y) {
+  const huella = document.createElement("div");
+  huella.className = "huella";
+  huella.textContent = "🐾";
+  huella.style.left = `${x}px`;
+  huella.style.top = `${y}px`;
+  document.body.appendChild(huella);
+
+  setTimeout(() => {
+    huella.remove();
+  }, 1200);
+}
+
+</script>
+</body>
+
+</html>
+
